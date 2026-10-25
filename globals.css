@@ -1,0 +1,176 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme inline {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), var(--font-lora), Georgia, serif;
+
+  --color-wine: var(--wine);
+  --color-caramel: var(--caramel);
+  --color-sand: var(--sand);
+  --color-cream: var(--cream);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.15);
+  --radius-2xl: calc(var(--radius) * 1.15);
+  --radius-3xl: calc(var(--radius) * 1.4);
+  --radius-4xl: calc(var(--radius) * 1.6);
+}
+
+:root {
+  color-scheme: light;
+
+  /* Палітра «Вино і пісок» */
+  --wine: #722f37;
+  --caramel: #9a5b3c;
+  --sand: #c2a878;
+  --cream: #f6efe4;
+  --surface: #e9dcc0;
+  --ink: #4a2420;
+  --paper: #f2e8d5;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--cream);
+  --popover-foreground: var(--ink);
+  --primary: var(--wine);
+  --primary-foreground: var(--cream);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface);
+  --muted-foreground: #6b3f33;
+  --accent: var(--surface);
+  --accent-foreground: var(--ink);
+  --destructive: #8f1d1d;
+  --border: rgb(154 91 60 / 0.25);
+  --input: rgb(154 91 60 / 0.45);
+  --ring: var(--wine);
+  --radius: 0.875rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: 'ss01';
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif text-balance;
+    font-optical-sizing: auto;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--sand);
+    color: var(--ink);
+  }
+}
+
+@layer components {
+  .prose-exo {
+    @apply max-w-prose text-base leading-relaxed text-foreground;
+  }
+  .prose-exo h2 {
+    @apply mt-10 mb-3 text-2xl text-primary;
+  }
+  .prose-exo h3 {
+    @apply mt-6 mb-2 text-lg;
+  }
+  .prose-exo p {
+    @apply mb-4;
+  }
+  .prose-exo ul {
+    @apply mb-4 list-disc space-y-1.5 pl-5 marker:text-caramel;
+  }
+  .prose-exo a {
+    @apply text-primary underline underline-offset-4;
+  }
+}
+
+/* Рухомий фон з векторними тваринами (див. components/layout/ambient-animals.tsx) */
+@keyframes exo-walk {
+  from {
+    transform: translate3d(-30vw, 0, 0);
+  }
+  to {
+    transform: translate3d(110vw, 0, 0);
+  }
+}
+
+@keyframes exo-walk-back {
+  from {
+    transform: translate3d(110vw, 0, 0);
+  }
+  to {
+    transform: translate3d(-30vw, 0, 0);
+  }
+}
+
+@keyframes exo-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-1.2deg);
+  }
+}
+
+.exo-walker {
+  animation: exo-walk 100s linear infinite;
+  will-change: transform;
+}
+
+.exo-walker[data-dir='back'] {
+  animation-name: exo-walk-back;
+}
+
+.exo-bob {
+  animation: exo-bob 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exo-ambient {
+    display: none;
+  }
+}
